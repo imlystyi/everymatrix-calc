@@ -30,7 +30,7 @@ internal class Calculator
         Console.WriteLine("\nNow you can enter the expression");
     }
 
-    public void StartLoop()
+    public void Loop()
     {
         while (true)
         {

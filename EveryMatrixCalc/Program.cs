@@ -6,7 +6,7 @@
         {
             Calculator calculator = new();
 
-            calculator.StartLoop();
+            calculator.Loop();
         }
     }
 }
