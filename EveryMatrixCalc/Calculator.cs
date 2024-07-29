@@ -2,9 +2,32 @@
 
 internal class Calculator
 {
+    private readonly int _precision;
+
     public Calculator()
     {
-        Console.WriteLine(""); // TODO: Write instruction
+        Console.WriteLine("""
+                          Calculator app is running.
+                          Instruction:
+                          1. Enter an expression in the following format: [operand] [operator] [operand]
+                             Supported operators: +, -, *, /
+                             Supported operands: any number or NaN
+                          2. Separate each part of the expression with a whitespace
+                          3. Press Enter to calculate the expression
+
+                          Enter the precision of the result (number of decimal places)
+                          """);
+
+        Console.Write("> ");
+
+        if (!int.TryParse(Console.ReadLine(), out _precision))
+        {
+            Console.WriteLine("Precision is invalid. Precision will be set to default (3 decimal places)");
+
+            _precision = 3;
+        }
+
+        Console.WriteLine("\nNow you can enter the expression");
     }
 
     public void StartLoop()
@@ -47,32 +70,33 @@ internal class Calculator
 
     private void CalculateExpression(in double firstOperand, in double secondOperand, in string @operator)
     {
-        Console.CursorTop--;
-        Console.Write($"> {firstOperand} {@operator} {secondOperand} = ");
+        double result;
 
         switch (@operator)
         {
             case "+":
-                Console.Write($"{firstOperand + secondOperand}\n");
+                result = firstOperand + secondOperand;
 
                 break;
             case "-":
-                Console.Write($"{firstOperand - secondOperand}\n");
+                result = firstOperand - secondOperand;
 
                 break;
             case "*":
-                Console.Write($"{firstOperand * secondOperand}\n");
+                result = firstOperand * secondOperand;
 
                 break;
             case "/":
-                Console.Write($"{firstOperand / secondOperand}\n");
+                result = firstOperand / secondOperand;
 
                 break;
             default:
-                Console.Write("err\n");
                 Console.WriteLine("Error: invalid operation");
 
-                break;
+                return;
         }
+
+        string format = $"N{_precision}";
+        Console.WriteLine($"{firstOperand.ToString(format)} {@operator} {secondOperand.ToString(format)} = {result.ToString(format)}");
     }
 }
