@@ -11,39 +11,68 @@ internal class Calculator
     {
         while (true)
         {
-            Console.Write("Enter an expression\n> ");
+            Console.Write("> ");
 
             string input = Console.ReadLine();
 
-            if (input == null)
-                Console.WriteLine("Error: expression cannot be empty");
+            this.ProcessExpression(input);
+        }
+    }
 
-            input = string.Join("", input.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
+    private void ProcessExpression(in string? input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            Console.WriteLine("Error: expression is empty");
 
-            string[] inputSplit = input.Split('+');
+            return;
+        }
 
-            if (inputSplit.Length != 2)
-            {
-                Console.WriteLine("Error: invalid expression");
+        string[] inputSplit = input.Split(' ');
 
-                continue;
-            }
+        if (inputSplit.Length != 3)
+        {
+            Console.WriteLine("Error: invalid expression");
 
-            if (!double.TryParse(inputSplit.First(), out double firstOperand))
-            {
-                Console.WriteLine("Error: first operand is invalid");
+            return;
+        }
 
-                continue;
-            }
+        if (!double.TryParse(inputSplit.First(), out double firstOperand))
+            Console.WriteLine("Error: first operand is invalid");
+        if (!double.TryParse(inputSplit.Last(), out double secondOperand))
+            Console.WriteLine("Error: second operand is invalid");
 
-            if (!double.TryParse(inputSplit.Last(), out double secondOperand))
-            {
-                Console.WriteLine("Error: second operand is invalid");
+        this.CalculateExpression(firstOperand, secondOperand, inputSplit[1]);
+    }
 
-                continue;
-            }
+    private void CalculateExpression(in double firstOperand, in double secondOperand, in string @operator)
+    {
+        Console.CursorTop--;
+        Console.Write($"> {firstOperand} {@operator} {secondOperand} = ");
 
-            Console.WriteLine($"{firstOperand} + {secondOperand} = {firstOperand + secondOperand}");
+        switch (@operator)
+        {
+            case "+":
+                Console.Write($"{firstOperand + secondOperand}\n");
+
+                break;
+            case "-":
+                Console.Write($"{firstOperand - secondOperand}\n");
+
+                break;
+            case "*":
+                Console.Write($"{firstOperand * secondOperand}\n");
+
+                break;
+            case "/":
+                Console.Write($"{firstOperand / secondOperand}\n");
+
+                break;
+            default:
+                Console.Write("err\n");
+                Console.WriteLine("Error: invalid operation");
+
+                break;
         }
     }
 }
