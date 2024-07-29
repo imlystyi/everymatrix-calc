@@ -1,12 +1,11 @@
-﻿namespace EveryMatrixCalc
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            Calculator calculator = new();
+﻿namespace EveryMatrixCalc;
 
-            calculator.Loop();
-        }
+internal class Program
+{
+    private static void Main()
+    {
+        Calculator calculator = new();
+
+        calculator.Loop();
     }
 }

@@ -62,6 +62,7 @@ internal class Calculator
 
         if (!double.TryParse(inputSplit.First(), out double firstOperand))
             Console.WriteLine("Error: first operand is invalid");
+
         if (!double.TryParse(inputSplit.Last(), out double secondOperand))
             Console.WriteLine("Error: second operand is invalid");
 
